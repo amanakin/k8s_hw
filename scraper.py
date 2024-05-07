@@ -1,21 +1,23 @@
 #!/usr/bin/env python3
+import logging
 
 import requests
 import time
 import json
+import sys
 
 
 def fetch_statistics():
     try:
-        url = 'http://localhost:12121/statistics'
+        url = 'http://server-app:80/statistics'
 
         resp = requests.get(url)
 
         resp.raise_for_status()
 
         return resp.json()
-    except requests.RequestException as e:
-        print(e)
+    except Exception as err:
+        print('exception: ' + str(err), file=sys.stderr)
         return None
 
 
@@ -24,10 +26,7 @@ def main():
         stats = fetch_statistics()
 
         if stats is not None:
-            # Convert dictionary to a JSON string
             stats_json = json.dumps(stats)
-
-            # Print the result to a file
             with open("statistics_log.txt", "a") as file:
                 file.write(f"{stats_json}\n")
 
