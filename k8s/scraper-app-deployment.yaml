@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scraper-app
+  labels:
+    app: scraper-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: scraper-app
+  template:
+    metadata:
+      labels:
+        app: scraper-app
+    spec:
+      containers:
+        - name: scraper-app
+          image: scraper-app:latest
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              cpu: 500m
+              memory: 500Mi
+            requests:
+              cpu: 500m
+              memory: 500Mi
