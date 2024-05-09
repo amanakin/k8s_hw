@@ -8,12 +8,12 @@ RUN go version
 
 RUN go mod download
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o server ./cmd/server
+RUN CGO_ENABLED=0 GOOS=linux go build -o timer ./cmd/timer
 
 FROM alpine:latest
 WORKDIR /root/
-COPY --from=builder /app/server .
+COPY --from=builder /app/timer .
 
 EXPOSE 12121
 
-CMD ["./server"]
+CMD ["./timer"]
