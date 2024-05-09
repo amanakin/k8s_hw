@@ -9,7 +9,7 @@ import sys
 
 def fetch_statistics():
     try:
-        url = 'http://server-app:80/statistics'
+        url = 'http://timer-app:80/statistics'
 
         resp = requests.get(url)
 
