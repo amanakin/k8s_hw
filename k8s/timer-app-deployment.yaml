@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
         - name: timer-app
-          image: timer-app-image:latest
-          imagePullPolicy: IfNotPresent
+          image: timer-app-image:v2.1
+          imagePullPolicy: Never
           ports:
             - containerPort: 12121
               protocol: TCP
