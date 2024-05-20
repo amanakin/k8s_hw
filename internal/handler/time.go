@@ -7,20 +7,26 @@ import (
 	"time"
 )
 
-type Time struct {
-	Seconds int64 `json:"seconds"`
+type TimeResponse struct {
+	Time string `json:"time"`
 }
 
-func (h *Handler) HandleTime(w http.ResponseWriter, _ *http.Request) {
+func (h *Handler) HandleTime(w http.ResponseWriter, r *http.Request) {
 	h.service.IncRequestsCount()
 
 	w.Header().Set("Content-Type", "application/json")
-	var resp = Time{
-		Seconds: time.Now().Unix(),
+	t, err := h.service.GetTime(r.Context())
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
-	var b bytes.Buffer
 
-	err := json.NewEncoder(&b).Encode(resp)
+	var resp = TimeResponse{
+		Time: t.Format(time.RFC3339),
+	}
+
+	var b bytes.Buffer
+	err = json.NewEncoder(&b).Encode(resp)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return

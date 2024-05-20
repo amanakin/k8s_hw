@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
         - name: scraper-app
-          image: scraper-app-image:latest
-          imagePullPolicy: IfNotPresent
+          image: scraper-app-image:v2.1
+          imagePullPolicy: Never
           resources:
             limits:
               cpu: 500m
